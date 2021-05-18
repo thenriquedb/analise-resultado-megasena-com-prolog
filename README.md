@@ -15,10 +15,8 @@ O programa proporcionará formas para que o usuário possa fazer perguntas a ess
 - Um número X foi sorteado quantas vezes?
 - Qual o número foi mais sorteado?
 
-
-
-
+#### Fonte
 **[Hisórico de resultados em formato XLSX](https://redeloteria.com.br/mega-sena/todos-os-resultados-da-mega-sena/29275)**
 
-#### :link: Referências
+### :link: Referências
 [Predicate csv_read_file/3](https://www.swi-prolog.org/pldoc/man?predicate=csv_read_file/3)
