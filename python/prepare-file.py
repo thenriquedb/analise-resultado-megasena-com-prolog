@@ -19,12 +19,12 @@ class PrepareFile:
         self.data.rename(
             columns={
                 'Conc.': 'contest',
-                'Unnamed: 2': 'number-01',
-                'Unnamed: 3': 'number-02',
-                'Unnamed: 4': 'number-03',
-                'Unnamed: 5': 'number-04',
-                'Unnamed: 6': 'number-05',
-                'Unnamed: 7': 'number-06',
+                'Unnamed: 2': 'number_01',
+                'Unnamed: 3': 'number_02',
+                'Unnamed: 4': 'number_03',
+                'Unnamed: 5': 'number_04',
+                'Unnamed: 6': 'number_05',
+                'Unnamed: 7': 'number_06',
             }, inplace=True)
 
     def _convert_award_to_number(self):
@@ -33,7 +33,7 @@ class PrepareFile:
 
     def save_as_csv(self, path):
         print('> Save file to csv .')
-        self.data.to_csv(path)
+        self.data.to_csv(path, index=False)
 
     def _remove_unecessary_columns(self):
         print('> Remove unecessary columns...')
