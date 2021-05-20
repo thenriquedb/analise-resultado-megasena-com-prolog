@@ -6,9 +6,9 @@ load_games([]).
 load_games([H | T]) :- asserta(H), load_games(T). 
 
 main :- (
-    current_prolog_flag(argv, [F | _])
+    current_prolog_flag(argv, [_ | _])
         -> (
-            csv_read_file(F, G, [functor(game), arity(7)]), 
+            csv_read_file("data/games.csv", G, [functor(game), arity(7)]), 
                 maplist(assert, G),
 
             load_games(G)
