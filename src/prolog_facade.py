@@ -1,9 +1,9 @@
-from pyswip import Prolog
+from prolog_MT import PrologMT
 
 
 class PrologFacade:
     def __init__(self):
-        self.__prolog = Prolog()
+        self.__prolog = PrologMT()
 
     def consult(self, path: str):
         self.__prolog.consult(path)
