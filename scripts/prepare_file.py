@@ -1,4 +1,5 @@
 import pandas as pd
+from argparse import ArgumentParser
 
 
 class PrepareFile:
@@ -33,10 +34,16 @@ class PrepareFile:
         self.data.drop(columns=["Gan.", "Prêmio", "Data"], inplace=True)
 
     def to_csv(self, path):
-        print("> Save file to csv .")
+        print("> Save file to csv...")
         self.data.to_csv(path, index=False)
 
 
 if __name__ == "__main__":
-    mega_sena = PrepareFile("data/resultados.xlsx")
-    mega_sena.to_csv("data/games.csv")
+    parser = ArgumentParser(description="Convert your xlsx to csv")
+    parser.add_argument("file", help="Your xlsx file")
+    parser.add_argument("output", help="Your output file")
+
+    args = parser.parse_args()
+
+    mega_sena = PrepareFile(args.file)
+    mega_sena.to_csv(args.output)

@@ -1,20 +1,3 @@
-:- initialization(main).
+:- dynamic(game/7) .
 
-:- use_module(library(csv)).
-
-load_games([]).
-load_games([H | T]) :- asserta(H), load_games(T). 
-
-main :- (
-    current_prolog_flag(argv, [_ | _])
-        -> (
-            csv_read_file("data/games.csv", G, [functor(game), arity(7)]), 
-                maplist(assert, G),
-
-            load_games(G)
-        )
-        ; (
-            write("Error loading csv file"),
-            halt(0)
-        )
-).
+test(X) :- X is 1.
