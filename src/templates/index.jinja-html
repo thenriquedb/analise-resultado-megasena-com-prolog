@@ -1,38 +1,237 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mega-sena análises</title>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static',filename='css/tailwind.css') }}"
-    />
-  </head>
 
-  <body class="bg-blue-500 h-screen w-screen">
-    <div class="flex justify-center items-center h-full container mx-auto">
-      <form class="xl bg-red-50 w-full p-5 rounded-lg">
-        <div class="grid grid-flow-col gap-1 grid-rows-4">
-          {% for i in range(1,61) %}
-            <label for={{i}} class="w-12 h-12 px-4 cursor-pointer rounded-md bg-yellow-300 checked:bg-yellow-400 hover:bg-yellow-400">
-              <div  class=" px-3">{{i}}</div>
-              <input class="" number="number" id={{i}} value={{i}} type="checkbox"/>
-            </label>
-          {% endfor %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega-sena análises</title>
+    <link  rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tailwind.css') }}" />
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+</head>
+
+<body class="bg-gray-800">
+    <div class="flex flex-col">
+        <div class="w-11/12 px-5 mt-10 mx-auto">
+            <h1 class="text-center text-3xl text-gray-300 font-bold">Mega-sena</h1>
         </div>
-        
-        <div class="flex justify-end text-center w-full mt-6">
-          <input 
-            type="submit"
-            name="signin"
-            id="signin"
-            value="Verificar"
-            class="p-3 cursor-pointer rounded-lg bg-yellow-500 outline-none text-white shadow w-32 justify-center focus:bg-yellow-700 hover:bg-yellow-600">
-        </div>  
-      </form>
+        <div class="min-w-screen flex justify-center px-5 py-5">
+            <div class="w-full my-10 rounded-lg border border-gray-700 p-8 lg:py-12 lg:px-14 text-gray-300"
+                style="max-width: 800px">
+
+                <div class="flex mb-5">
+                    <div class="w-full">
+                        <div x-data={show:false}>
+                            <div class="bg-grey-lightest border-indigo select-none">
+                                <div class="flex justify-between items-center p-5 cursor-pointer"
+                                    x-on:click.prevent="show = !show">
+                                    <span class="text-grey-darkest font-normal text-xl">
+                                        Verificar se um número já foi sorteado
+                                    </span>
+                                    <div class="rounded-full w-7 h-7 flex items-center justify-center bg-indigo">
+                                        <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+
+                                        <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div x-show="show">
+                                    <div class="pl-8 pr-8 pb-5 text-grey-darkest">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fugiat at maxime
+                                        perspiciatis aliquid eius labore deserunt aliquam qui! Tenetur iusto asperiores
+                                        possimus molestias, fugit sint incidunt debitis veritatis omnis?
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div x-data={show:false}>
+                            <div class="bg-grey-lightest border-indigo select-none">
+                                <div class="flex justify-between items-center p-5 cursor-pointer"
+                                    x-on:click.prevent="show = !show">
+                                    <span class="text-grey-darkest font-normal text-xl">
+                                        Verificar quais número nunca foram sorteados
+                                    </span>
+                                    <div class="rounded-full w-7 h-7 flex items-center justify-center bg-indigo">
+                                        <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+
+                                        <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div x-show="show">
+                                    <div class="pl-8 pr-8 pb-5 text-grey-darkest">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fugiat at
+                                        maxime
+                                        perspiciatis aliquid eius labore deserunt aliquam qui! Tenetur iusto
+                                        asperiores
+                                        possimus molestias, fugit sint incidunt debitis veritatis omnis?
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div x-data={show:false}>
+                                <div class="bg-grey-lightest border-indigo select-none">
+                                    <div class="flex justify-between items-center p-5 cursor-pointer"
+                                        x-on:click.prevent="show = !show">
+                                        <span class="text-grey-darkest font-normal text-xl">
+                                            Verificar se um jogo já foi contemplado
+                                        </span>
+                                        <div class="rounded-full w-7 h-7 flex items-center justify-center bg-indigo">
+                                            <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+
+                                            <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div x-show="show">
+                                        <div class="pl-8 pr-8 pb-5 text-grey-darkest">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fugiat at
+                                            maxime
+                                            perspiciatis aliquid eius labore deserunt aliquam qui! Tenetur iusto
+                                            asperiores
+                                            possimus molestias, fugit sint incidunt debitis veritatis omnis?
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div x-data={show:false}>
+                                <div class="bg-grey-lightest border-indigo select-none">
+                                    <div class="flex justify-between items-center p-5 cursor-pointer"
+                                        x-on:click.prevent="show = !show">
+                                        <span class="text-grey-darkest font-normal text-xl">
+                                            Verificar se um jogo já foi contemplado mais de uma vez
+                                        </span>
+                                        <div class="rounded-full w-7 h-7 flex items-center justify-center bg-indigo">
+                                            <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+
+                                            <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div x-show="show">
+                                        <div class="pl-8 pr-8 pb-5 text-grey-darkest">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fugiat at
+                                            maxime
+                                            perspiciatis aliquid eius labore deserunt aliquam qui! Tenetur iusto
+                                            asperiores
+                                            possimus molestias, fugit sint incidunt debitis veritatis omnis?
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div x-data={show:false}>
+                                <div class="bg-grey-lightest border-indigo select-none">
+                                    <div class="flex justify-between items-center p-5 cursor-pointer"
+                                        x-on:click.prevent="show = !show">
+                                        <span class="text-grey-darkest font-normal text-xl">
+                                            Verificar quantas vezes um número já foi sorteado
+                                        </span>
+                                        <div class="rounded-full w-7 h-7 flex items-center justify-center bg-indigo">
+                                            <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+
+                                            <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div x-show="show">
+                                        <div class="pl-8 pr-8 pb-5 text-grey-darkest">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fugiat at
+                                            maxime
+                                            perspiciatis aliquid eius labore deserunt aliquam qui! Tenetur iusto
+                                            asperiores
+                                            possimus molestias, fugit sint incidunt debitis veritatis omnis?
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div x-data={show:false}>
+                                <div class="bg-grey-lightest border-indigo select-none">
+                                    <div class="flex justify-between items-center p-5 cursor-pointer"
+                                        x-on:click.prevent="show = !show">
+                                        <span class="text-grey-darkest font-normal text-xl">
+                                            Qual número mais sorteado
+                                        </span>
+                                        <div class="rounded-full w-7 h-7 flex items-center justify-center bg-indigo">
+                                            <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+
+                                            <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div x-show="show">
+                                        <div class="pl-8 pr-8 pb-5 text-grey-darkest">
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fugiat at
+                                            maxime
+                                            perspiciatis aliquid eius labore deserunt aliquam qui! Tenetur iusto
+                                            asperiores
+                                            possimus molestias, fugit sint incidunt debitis veritatis omnis?
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </body>
+</body>
+
 </html>
