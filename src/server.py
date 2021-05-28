@@ -23,7 +23,7 @@ class Server:
         self.__app.add_url_rule("/number-drawn", "number_drawn", self.__number_drawn,  methods=['POST'])
 
     def __index(self):
-        return render_template('index.html')
+        return render_template('index.jinja-html')
 
     def __number_drawn(self):
         body = request.get_json()

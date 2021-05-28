@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mega-sena análises</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='css/tailwind.css') }}"
+    />
+  </head>
+
+  <body class="bg-blue-500 h-screen w-screen">
+    <div class="flex justify-center items-center h-full container mx-auto">
+      <form class="xl bg-red-50 w-full p-5 rounded-lg">
+        <div class="grid grid-flow-col gap-1 grid-rows-4">
+          {% for i in range(1,61) %}
+            <label for={{i}} class="w-12 h-12 px-4 cursor-pointer rounded-md bg-yellow-300 checked:bg-yellow-400 hover:bg-yellow-400">
+              <div  class=" px-3">{{i}}</div>
+              <input class="" number="number" id={{i}} value={{i}} type="checkbox"/>
+            </label>
+          {% endfor %}
+        </div>
+        
+        <div class="flex justify-end text-center w-full mt-6">
+          <input 
+            type="submit"
+            name="signin"
+            id="signin"
+            value="Verificar"
+            class="p-3 cursor-pointer rounded-lg bg-yellow-500 outline-none text-white shadow w-32 justify-center focus:bg-yellow-700 hover:bg-yellow-600">
+        </div>  
+      </form>
+    </div>
+  </body>
+</html>
