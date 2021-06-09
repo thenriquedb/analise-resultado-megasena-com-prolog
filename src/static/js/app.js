@@ -26,7 +26,6 @@ async function post(endPoint = "", request = {}) {
 }
 /**
  * Verifica se um número já foi sorteado
- * @returns
  */
 async function onClickBtnCheckNumberDrawn() {
   const inptNumberDrawn = document.getElementById("inpt-number-drawn");
