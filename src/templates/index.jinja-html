@@ -21,6 +21,7 @@
 
                 <div class="flex mb-5">
                     <div class="w-full">
+                        {# <!--  Início verificar se um número já foi sorteado --> #}
                         <div x-data={show:false}>
                             <div class="bg-grey-lightest border-indigo select-none">
                                 <div class="flex justify-between items-center p-5 cursor-pointer"
@@ -64,10 +65,10 @@
                                             />
                                             <div class="flex justify-end ">
                                                 <button 
-                                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4
-                                                            focus:outline-none focus:ring-none rounded"
-                                                        id="check-number-drawn"
-                                                    >
+                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4
+                                                        focus:outline-none focus:ring-none rounded"
+                                                    id="check-number-drawn"
+                                                >
                                                     Verificar
                                                 </button>
                                             </div>
@@ -76,6 +77,7 @@
                                 </div>
                             </div>
                         </div>
+                        {# <!-- Fim verificar se um número já foi sorteado --> #}
 
                         <div x-data={show:false}>
                             <div class="bg-grey-lightest border-indigo select-none">
@@ -202,6 +204,7 @@
                             </div>
                         </div>
 
+                        {# <!--   Início verificar se um número já foi sorteado  --> #}
                         <div x-data={show:false}>
                             <div class="bg-grey-lightest border-indigo select-none">
                                 <div class="flex justify-between items-center p-5 cursor-pointer"
@@ -225,17 +228,40 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <div x-show="show">
+                                                             <div x-show="show">
                                     <div class="pl-8 pr-8 pb-5 text-grey-darkest">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fugiat at
-                                        maxime
-                                        perspiciatis aliquid eius labore deserunt aliquam qui! Tenetur iusto
-                                        asperiores
-                                        possimus molestias, fugit sint incidunt debitis veritatis omnis?
+                                        <div class="w-100 space-y-3">
+                                            <div class="flex justify-center w-100">
+                                                <div class="w-full group relative bg-green-300 border border-green-900 px-4 py-2 rounded-md hidden" id="occurence-of-drawn-number-alert">
+                                                    <h4 class="text-lg font-semibold text-center mb-2 text-green-900">
+         
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                            
+                                            <input 
+                                                class="w-full placeholder-gray-300 text-gray-300 bg-gray-500 py-2 
+                                                    px-2 border border-700 focus:outline-none focus:ring-none rounded" 
+                                                id="inpt-occurence-of-drawn-number"
+                                                type="number"
+                                                max="60"
+                                                min="1"
+                                            />
+                                            <div class="flex justify-end ">
+                                                <button 
+                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4
+                                                        focus:outline-none focus:ring-none rounded"
+                                                    id="check-occurence-of-drawn-number"
+                                                    >
+                                                    Verificar
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        {# <!-- Termino Verificar se um número já foi sorteado  --> #}
                         
                         <div x-data={show:false}>
                             <div class="bg-grey-lightest border-indigo select-none">
