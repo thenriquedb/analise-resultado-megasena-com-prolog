@@ -1,26 +1,50 @@
 from flask import request
 from helpers import PrologFacade
+from http import HTTPStatus
+
+STATUS_CODE = 200
 
 
 class Controllers:
     def __init__(self):
         self.__prolog = PrologFacade()
 
-    """
-    Return if number has ever been drawn.
+    def __body_validation(self, body: dict, fields: list):
+        if not body:
+            return {"error": "Wrong format"}, HTTPStatus.ACCEPTED
 
-    Body (JSON):
-        "number": int 1 > number <= 60
+        fields_dict = {}
+        for field in fields:
+            fields_dict[field] = False
 
-    Returns:
-        bool: True for drawn, False not drawn.
-    """
+        for key in body.keys():
+            if not fields_dict[key]:
+                field[key] = True
+
+        response = {"error": {}}
+        status_code = HTTPStatus.ACCEPTED
+        for field in fields_dict:
+            if not fields_dict[key]:
+                response["error"][key] = '{} is required'.format(key)
+                status_code = HTTPStatus.UNPROCESSABLE_ENTITY
+
+        return response, status_code
 
     def number_drawn(self):
+        """
+        Return if number has ever been drawn.
+
+        Body (JSON):
+            "number": int 1 > number <= 60
+
+        Returns:
+            bool: True for drawn, False not drawn.
+        """
         body = request.get_json()
+        # self.__body_validation(self, body, ['number'])
         if not body:
             return {"error": "Wrong format"}, 422
-
+        # __body_validation
         if "number" not in body:
             return {
                 "error": {
@@ -78,10 +102,18 @@ class Controllers:
             }
         }
 
-    def number_drawn_how_many_times(self):
+    def check_occurence_of_drawn_number(self):
+        body = request.get_json()
+        if not body:
+            return {"error": "Wrong format"}, 422
+
+        query = "ocurrence_of({},{}, Count)".format(
+            [*range(1, 61)], body["number"])
+        count = self.__prolog.query(query)
+
         return {
             "data": {
-                "ok": True
+                "count": count[0]['Count']
             }
         }
 

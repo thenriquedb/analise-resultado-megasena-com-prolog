@@ -16,22 +16,40 @@ class Server:
     def __register_routers(self):
         self.__app.add_url_rule("/", "index", self.__index)
         self.__app.add_url_rule(
-            "/number-drawn", "number_drawn", self.__number_drawn, methods=['POST'])
+            "/number-drawn",
+            "number_drawn",
+            self.__number_drawn,
+            methods=['POST'])
 
         self.__app.add_url_rule(
-            "/winning-game", "winning_game", self.__winning_game, methods=['POST'])
+            "/winning-game",
+            "winning_game",
+            self.__winning_game,
+            methods=['POST'])
 
         self.__app.add_url_rule(
-            "/never-drawn", "never_drawn", self.__never_drawn, methods=['POST'])
+            "/never-drawn",
+            "never_drawn",
+            self.__never_drawn,
+            methods=['POST'])
 
         self.__app.add_url_rule(
-            "/win-the-game-more-often", "win_the_game_more_often", self.__win_the_game_more_often, methods=['POST'])
+            "/win-the-game-more-often",
+            "win_the_game_more_often",
+            self.__win_the_game_more_often,
+            methods=['POST'])
 
         self.__app.add_url_rule(
-            "/number-drawn-how-many-times", "number_drawn_how_many_times", self.__number_drawn_how_many_times, methods=['POST'])
+            "/number-drawn-how-many-times",
+            "number_drawn_how_many_times",
+            self.__check_occurence_of_drawn_number,
+            methods=['POST'])
 
         self.__app.add_url_rule(
-            "/more-drawn-number", "more_drawn_number", self.__more_drawn_number, methods=['POST'])
+            "/more-drawn-number",
+            "more_drawn_number",
+            self.__more_drawn_number,
+            methods=['POST'])
 
     def __index(self):
         return render_template('index.jinja-html')
@@ -48,8 +66,8 @@ class Server:
     def __win_the_game_more_often(self):
         return self.__controllers.win_the_game_more_often()
 
-    def __number_drawn_how_many_times(self):
-        return self.__controllers.number_drawn_how_many_times()
+    def __check_occurence_of_drawn_number(self):
+        return self.__controllers.check_occurence_of_drawn_number()
 
     def __more_drawn_number(self):
         return self.__controllers.more_drawn_number()
