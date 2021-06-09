@@ -2,16 +2,19 @@
 game(1232, 1, 2, 3, 4, 5, 6) .
 game(8721, 10, 20, 32, 40, 50, 60) .
 game(2312, 1, 2, 3, 4, 5, 6) .
+game(2312, 1, 2, 3, 4, 5, 6) .
+game(2312, 1, 2, 3, 4, 5, 6) .
+game(2312, 1, 2, 3, 4, 5, 6) .
 
 /*************************************************************************
  * O número X já foi sorteado alguma vez? Por exemplo: numero_sorteado(2).
 ************************************************************************/
-number_drawn(X) :- game(_, X, _, _, _, _, _), ! ;
-                   game(_, _, X, _, _, _, _), ! ;
-                   game(_, _, _, X, _, _, _), ! ;
-                   game(_, _, _, _, X, _, _), ! ;
-                   game(_, _, _, _, _, X, _), ! ;
-                   game(_, _, _, _, _, _, X), !.
+number_drawn(X) :- game(_, X, _, _, _, _, _)  ;
+                   game(_, _, X, _, _, _, _)  ;
+                   game(_, _, _, X, _, _, _)  ;
+                   game(_, _, _, _, X, _, _)  ;
+                   game(_, _, _, _, _, X, _)  ;
+                   game(_, _, _, _, _, _, X) .
 
 /*************************************************************************
  * Qual número nunca foi sorteado? Por exemplo: sorteado(X).
@@ -34,7 +37,6 @@ do_list(N, L):- findall(Num, between(1, N, Num), L)  .
 ocurrence_of([] , _, 0) . %empty list, count of anything is 0. Base case.
 % The first item in the list is the same as what you want to count so
 % add1 to the recursive count.
-
 ocurrence_of([H|T], H, NewCount) :- 
     (number_drawn(H) -> ocurrence_of(T, H, OldCount), NewCount is OldCount + 1) ;
     ocurrence_of(T, H, OldCount) .
@@ -46,3 +48,4 @@ ocurrence_of([H | T] ,H2, Count) :- dif(H,H2),
 
 % Qual o número foi mais sorteado?
 more_drawn_number() :- false.
+
