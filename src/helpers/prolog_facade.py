@@ -1,4 +1,4 @@
-from prolog_MT import PrologMT
+from .prolog_MT import PrologMT
 
 
 class PrologFacade:

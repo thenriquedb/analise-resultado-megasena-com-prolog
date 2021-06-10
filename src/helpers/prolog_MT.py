@@ -3,7 +3,12 @@ import ctypes
 
 
 class PrologMT(pyswip.Prolog):
-    """Multi-threaded (one-to-one) pyswip.Prolog ad-hoc reimpl"""
+    """
+    Multi-threaded (one-to-one) pyswip.Prolog ad-hoc reimpl
+
+    Reference:
+        https://github.com/yuce/pyswip/issues/3
+    """
     _swipl = pyswip.core._lib
 
     PL_thread_self = _swipl.PL_thread_self

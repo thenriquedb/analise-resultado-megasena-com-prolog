@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega-sena análises</title>
+    <link  rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tailwind.css') }}" />
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+</head>
+
+<body class="bg-gray-800">
+    <div class="flex flex-col">
+        <div class="w-11/12 px-5 mt-10 mx-auto">
+            <h1 class="text-center text-3xl text-gray-300 font-bold">Mega-sena</h1>
+        </div>
+        <div class="min-w-screen flex justify-center px-5 py-5">
+            <div class="w-full my-10 rounded-lg border border-gray-700 p-8 lg:py-12 lg:px-14 text-gray-300"
+                style="max-width: 800px">
+
+                <div class="flex mb-5">
+                    <div class="w-full">
+                        {# <!--  Início verificar se um número já foi sorteado --> #}
+                        <div x-data={show:false}>
+                            <div class="bg-grey-lightest border-indigo select-none">
+                                <div class="flex justify-between items-center p-5 cursor-pointer"
+                                    x-on:click.prevent="show = !show">
+                                    <span class="text-grey-darkest font-normal text-xl">
+                                        Verificar se um número já foi sorteado
+                                    </span>
+                                    <div class="rounded-full w-7 h-7 flex items-center justify-center bg-indigo">
+                                        <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+
+                                        <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div x-show="show">
+                                    <div class="pl-8 pr-8 pb-5 text-grey-darkest">
+                                        <div class="w-100 space-y-3">
+                                            <div class="flex justify-center w-100">
+                                                <div class="w-full group relative bg-green-300 border border-green-900 px-4 py-2 rounded-md hidden" id="number-drawn-alert">
+                                                    <h4 class="text-lg font-semibold text-center mb-2 text-green-900">
+         
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                            <input 
+                                                class="w-full placeholder-gray-300 text-gray-300 bg-gray-500 py-2 
+                                                    px-2 border border-700 focus:outline-none focus:ring-none rounded" 
+                                                id="inpt-number-drawn"
+                                                type="number"
+                                                max="60"
+                                                min="1"
+                                            />
+                                            <div class="flex justify-end ">
+                                                <button 
+                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4
+                                                        focus:outline-none focus:ring-none rounded"
+                                                    id="check-number-drawn"
+                                                >
+                                                    Verificar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {# <!-- Fim verificar se um número já foi sorteado --> #}
+
+                        <div x-data={show:false}>
+                            <div class="bg-grey-lightest border-indigo select-none">
+                                <div class="flex justify-between items-center p-5 cursor-pointer"
+                                    x-on:click.prevent="show = !show">
+                                    <span class="text-grey-darkest font-normal text-xl">
+                                        Verificar quais número nunca foram sorteados
+                                    </span>
+                                    <div class="rounded-full w-7 h-7 flex items-center justify-center bg-indigo">
+                                        <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+
+                                        <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div x-show="show">
+                                    <div class="pl-8 pr-8 pb-5 text-grey-darkest">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fugiat at
+                                        maxime
+                                        perspiciatis aliquid eius labore deserunt aliquam qui! Tenetur iusto
+                                        asperiores
+                                        possimus molestias, fugit sint incidunt debitis veritatis omnis?
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div x-data={show:false}>
+                            <div class="bg-grey-lightest border-indigo select-none">
+                                <div class="flex justify-between items-center p-5 cursor-pointer"
+                                    x-on:click.prevent="show = !show">
+                                    <span class="text-grey-darkest font-normal text-xl">
+                                        Verificar se um jogo já foi contemplado
+                                    </span>
+                                    <div class="rounded-full w-7 h-7 flex items-center justify-center bg-indigo">
+                                        <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+
+                                        <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div x-show="show">
+                                    <div class="pl-8 pr-8 pb-5 text-grey-darkest">
+                                        <div class="w-100 space-y-3">
+                                            <div class="flex justify-center w-100">
+                                                <div class="w-full group relative bg-green-300 border border-green-900 px-4 py-2 rounded-md hidden" id="winning-game-alert">
+                                                    <h4 class="text-lg font-semibold text-center mb-2 text-green-900">
+                                                        
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                            <input 
+                                                class="w-full placeholder-gray-300 text-gray-300 bg-gray-500 py-2 
+                                                    px-2 border border-700 focus:outline-none focus:ring-none rounded" 
+                                                id="inpt-winning-game"
+                                                type="text"
+                                                placeholder="Example: n1;n2;n3;n4;n5;n6"
+                                            />
+                                            <div class="flex justify-end ">
+                                                <button 
+                                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4
+                                                            focus:outline-none focus:ring-none rounded"
+                                                        id="check-winning-game"
+                                                    >
+                                                    Verificar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div x-data={show:false}>
+                            <div class="bg-grey-lightest border-indigo select-none">
+                                <div class="flex justify-between items-center p-5 cursor-pointer"
+                                    x-on:click.prevent="show = !show">
+                                    <span class="text-grey-darkest font-normal text-xl">
+                                        Verificar se um jogo já foi contemplado mais de uma vez
+                                    </span>
+                                    <div class="rounded-full w-7 h-7 flex items-center justify-center bg-indigo">
+                                        <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+
+                                        <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div x-show="show">
+                                    <div class="pl-8 pr-8 pb-5 text-grey-darkest">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fugiat at
+                                        maxime
+                                        perspiciatis aliquid eius labore deserunt aliquam qui! Tenetur iusto
+                                        asperiores
+                                        possimus molestias, fugit sint incidunt debitis veritatis omnis?
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {# <!--   Início verificar se um número já foi sorteado  --> #}
+                        <div x-data={show:false}>
+                            <div class="bg-grey-lightest border-indigo select-none">
+                                <div class="flex justify-between items-center p-5 cursor-pointer"
+                                    x-on:click.prevent="show = !show">
+                                    <span class="text-grey-darkest font-normal text-xl">
+                                        Verificar quantas vezes um número já foi sorteado
+                                    </span>
+                                    <div class="rounded-full w-7 h-7 flex items-center justify-center bg-indigo">
+                                        <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+
+                                        <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                                             <div x-show="show">
+                                    <div class="pl-8 pr-8 pb-5 text-grey-darkest">
+                                        <div class="w-100 space-y-3">
+                                            <div class="flex justify-center w-100">
+                                                <div class="w-full group relative bg-green-300 border border-green-900 px-4 py-2 rounded-md hidden" id="occurence-of-drawn-number-alert">
+                                                    <h4 class="text-lg font-semibold text-center mb-2 text-green-900">
+         
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                            
+                                            <input 
+                                                class="w-full placeholder-gray-300 text-gray-300 bg-gray-500 py-2 
+                                                    px-2 border border-700 focus:outline-none focus:ring-none rounded" 
+                                                id="inpt-occurence-of-drawn-number"
+                                                type="number"
+                                                max="60"
+                                                min="1"
+                                            />
+                                            <div class="flex justify-end ">
+                                                <button 
+                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4
+                                                        focus:outline-none focus:ring-none rounded"
+                                                    id="check-occurence-of-drawn-number"
+                                                    >
+                                                    Verificar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {# <!-- Termino Verificar se um número já foi sorteado  --> #}
+                        
+                        <div x-data={show:false}>
+                            <div class="bg-grey-lightest border-indigo select-none">
+                                <div class="flex justify-between items-center p-5 cursor-pointer"
+                                    x-on:click.prevent="show = !show">
+                                    <span class="text-grey-darkest font-normal text-xl">
+                                        Qual número mais sorteado
+                                    </span>
+                                    <div class="rounded-full w-7 h-7 flex items-center justify-center bg-indigo">
+                                        <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+
+                                        <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div x-show="show">
+                                    <div class="pl-8 pr-8 pb-5 text-grey-darkest">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fugiat at
+                                        maxime
+                                        perspiciatis aliquid eius labore deserunt aliquam qui! Tenetur iusto
+                                        asperiores
+                                        possimus molestias, fugit sint incidunt debitis veritatis omnis?
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+
+</html>
