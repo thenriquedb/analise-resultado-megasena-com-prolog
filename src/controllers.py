@@ -107,13 +107,12 @@ class Controllers:
         if not body:
             return {"error": "Wrong format"}, 422
 
-        query = "ocurrence_of({},{}, Count)".format(
-            [*range(1, 61)], body["number"])
-        count = self.__prolog.query(query)
+        query = "count_occ({}, Count)".format(body["number"])
+        result = self.__prolog.query(query)
 
         return {
             "data": {
-                "count": count[0]['Count']
+                "count": result[0]['Count']
             }
         }
 

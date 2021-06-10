@@ -29,22 +29,8 @@ win_the_game_more_often() :- false.
 
 /*************************************************************************
  * Um número X foi sorteado quantas vezes?.
- * Reference:
-    https://www.reddit.com/r/prolog/comments/4cecoe/how_to_count_ocurrences_of_an_element_in_a_list/
 ************************************************************************/
-do_list(N, L):- findall(Num, between(1, N, Num), L)  .
-
-ocurrence_of([] , _, 0) . %empty list, count of anything is 0. Base case.
-% The first item in the list is the same as what you want to count so
-% add1 to the recursive count.
-ocurrence_of([H|T], H, NewCount) :- 
-    (number_drawn(H) -> ocurrence_of(T, H, OldCount), NewCount is OldCount + 1) ;
-    ocurrence_of(T, H, OldCount) .
-
-%The first item in the list is different so keep old count
-ocurrence_of([H | T] ,H2, Count) :- dif(H,H2),
-    ocurrence_of(T, H2, Count) .
-
+count_occ(X, N) :- aggregate_all(count, number_drawn(X), N).
 
 % Qual o número foi mais sorteado?
 more_drawn_number() :- false.
