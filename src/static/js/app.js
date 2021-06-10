@@ -1,5 +1,5 @@
 /**UTILS */
-function convertGameNumbersToArray(value = '') {
+function convertGameNumbersToArray(value = "") {
   try {
     return value
       .replace(/\s/g, "")
@@ -94,7 +94,7 @@ function onClickBtnCheckWinningGame() {
  * Verifica a ocorr*encia de sorteios de determinado núemero
  */
 async function onClickBtnCheckOccurenceOfDrawnNumber() {
-  const inptOccurenceOfDrawnNumber = document.getElementById('inpt-occurence-of-drawn-number')
+  const inptOccurenceOfDrawnNumber = document.getElementById("inpt-occurence-of-drawn-number")
   const alertOccurenceOfDrawnNumber = document.getElementById("occurence-of-drawn-number-alert");
 
   if (!inptOccurenceOfDrawnNumber.value) {
@@ -104,13 +104,37 @@ async function onClickBtnCheckOccurenceOfDrawnNumber() {
 
   const number = parseInt(inptOccurenceOfDrawnNumber.value);
   try {
-    const responseBody = await post('/number-drawn-how-many-times', { number })
-    console.log({ responseBody });
+    const responseBody = await post("/number-drawn-how-many-times", { number })
+    
     const { data: { count } } = responseBody
     const message = `O número ${number} foi sorteado ${count} vez(es)`;
 
-    alertOccurenceOfDrawnNumber.classList.remove('hidden')
+    alertOccurenceOfDrawnNumber.classList.remove("hidden")
     alertOccurenceOfDrawnNumber.querySelector("h4").innerHTML = message
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+
+/**
+ * Verifica quais números nunca foram sorteados
+ */
+ async function onClickBtnNumberNeverDrawn() {
+  const alertNumberNeverDrawn = document.getElementById("number-never-drawn-alert");
+  try {
+    const responseBody = await post("/never-drawn")
+    const { data: { list } } = responseBody
+
+    let message;
+    if (list.length == 0) {
+      message = "Todos os números já foram sorteados";
+    } else {
+      message = `Os números (${list.join(", ")}) nunca foram sorteados`;
+    }
+
+    alertNumberNeverDrawn.classList.remove("hidden")
+    alertNumberNeverDrawn.querySelector("h4").innerHTML = message
   } catch (error) {
     console.error(error)
   }
@@ -123,8 +147,10 @@ document.onload = (() => {
   const btnCheckNumberDrawn = document.getElementById("check-number-drawn");
   const btnCheckWinningGame = document.getElementById("check-winning-game");
   const btnCheckOccurenceOfDrawnNumber = document.getElementById("check-occurence-of-drawn-number");
+  const btnCheckNumberNeverDrawn = document.getElementById("check-number-never-drawn");
 
   btnCheckNumberDrawn.addEventListener("click", onClickBtnCheckNumberDrawn);
   btnCheckWinningGame.addEventListener("click", onClickBtnCheckWinningGame);
-  btnCheckOccurenceOfDrawnNumber.addEventListener("click", onClickBtnCheckOccurenceOfDrawnNumber)
+  btnCheckOccurenceOfDrawnNumber.addEventListener("click", onClickBtnCheckOccurenceOfDrawnNumber);
+  btnCheckNumberNeverDrawn.addEventListener("click", onClickBtnNumberNeverDrawn);
 })();

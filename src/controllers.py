@@ -89,9 +89,10 @@ class Controllers:
         }
 
     def never_drawn(self):
+        result = self.__prolog.query("never_drawn(List)")
         return {
             "data": {
-                "ok": True
+                "list": result[0]["List"]
             }
         }
 
