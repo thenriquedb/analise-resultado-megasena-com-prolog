@@ -118,8 +118,11 @@ class Controllers:
         }
 
     def more_drawn_number(self):
+        query = "more_drawn_number(L)"
+        result = self.__prolog.query(query)
+
         return {
             "data": {
-                "ok": True
+                "number": result[0]['L']
             }
         }

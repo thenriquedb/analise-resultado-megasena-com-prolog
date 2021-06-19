@@ -105,7 +105,7 @@ async function onClickBtnCheckOccurenceOfDrawnNumber() {
   const number = parseInt(inptOccurenceOfDrawnNumber.value);
   try {
     const responseBody = await post("/number-drawn-how-many-times", { number })
-    
+
     const { data: { count } } = responseBody
     const message = `O número ${number} foi sorteado ${count} vez(es)`;
 
@@ -120,7 +120,7 @@ async function onClickBtnCheckOccurenceOfDrawnNumber() {
 /**
  * Verifica quais números nunca foram sorteados
  */
- async function onClickBtnNumberNeverDrawn() {
+async function onClickBtnNumberNeverDrawn() {
   const alertNumberNeverDrawn = document.getElementById("number-never-drawn-alert");
   try {
     const responseBody = await post("/never-drawn")
@@ -140,6 +140,19 @@ async function onClickBtnCheckOccurenceOfDrawnNumber() {
   }
 }
 
+async function onClickBtnMoreDrawnNumber() {
+  const alertMoreDrawnNumber = document.getElementById("more-drawn-number-alert");
+  try {
+    const responseBody = await post("/more-drawn-number")
+    const { data: { number } } = responseBody
+
+    alertMoreDrawnNumber.classList.remove("hidden")
+    alertMoreDrawnNumber.querySelector("h4").innerHTML = `O número mais sorteado foi ${number + 1}`
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 /**
  * Adiciona o evento de clique em todos os botões
  */
@@ -148,9 +161,13 @@ document.onload = (() => {
   const btnCheckWinningGame = document.getElementById("check-winning-game");
   const btnCheckOccurenceOfDrawnNumber = document.getElementById("check-occurence-of-drawn-number");
   const btnCheckNumberNeverDrawn = document.getElementById("check-number-never-drawn");
+  const btnCheckMoreDrawnNumber = document.getElementById("check-more-drawn-number");
+
+  // check-more-drawn-number
 
   btnCheckNumberDrawn.addEventListener("click", onClickBtnCheckNumberDrawn);
   btnCheckWinningGame.addEventListener("click", onClickBtnCheckWinningGame);
   btnCheckOccurenceOfDrawnNumber.addEventListener("click", onClickBtnCheckOccurenceOfDrawnNumber);
   btnCheckNumberNeverDrawn.addEventListener("click", onClickBtnNumberNeverDrawn);
+  btnCheckMoreDrawnNumber.addEventListener("click", onClickBtnMoreDrawnNumber);
 })();
