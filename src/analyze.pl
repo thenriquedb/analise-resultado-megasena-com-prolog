@@ -1,10 +1,12 @@
 :- dynamic(game/7).
-game(1232, 1, 2, 3, 4, 5, 6) .
-game(8721, 10, 20, 32, 40, 50, 60) .
-game(2312, 1, 2, 3, 4, 5, 6) .
-game(2312, 1, 2, 3, 4, 5, 6) .
-game(2312, 1, 2, 3, 4, 5, 6) .
-game(2312, 1, 2, 3, 4, 5, 6) .
+
+create_list_of_numbers(A, A, [A]).
+create_list_of_numbers(N, A, [N|T]) :-
+    N < A,
+    N1 is N + 1,
+    create_list_of_numbers(N1, A, T).
+
+max_list(L, M, I) :- nth0(I, L, M), \+ (member(E, L), E > M).
 
 /*************************************************************************
  * O número X já foi sorteado alguma vez? Por exemplo: numero_sorteado(2).
@@ -19,33 +21,41 @@ number_drawn(X) :- game(_, X, _, _, _, _, _)  ;
 /*************************************************************************
  * Qual número nunca foi sorteado? Por exemplo: sorteado(X).
 *************************************************************************/
-never_drawn() :- false.
+never_drawn(List) :- findall(X, (between(1, 60, X), not(number_drawn(X))), List).
 
-% O jogo (X1,X2,X3,X4,X5,X6) já foi contemplado alguma vez? Por exemplo: jogo_sorteado(2,3,5,7,9,19).
-winning_game(A,B,C,D,E,F) :- game(_,A,B,C,D,E,F) .
+/*************************************************************************
+ * O jogo (X1,X2,X3,X4,X5,X6) já foi contemplado alguma vez? Por exemplo: jogo_sorteado(2,3,5,7,9,19).
+*************************************************************************/
+winning_game(A,B,C,D,E,F) :- game(_,A,B,C,D,E,F).
 
-% Algum jogo completo já foi contemplado mais de uma vez? Qual?
-win_the_game_more_often() :- false.
+
+/*************************************************************************
+ * Algum jogo completo já foi contemplado mais de uma vez? Qual?
+*************************************************************************/
+create_list_of_game_count(List) :- findall(Q, 
+    (   
+        
+        game(_, N1, N2, N3, N4, N5, N6), 
+        aggregate_all(count, game(_, N1, N2, N3, N4, N5, N6), Q)
+    ), List).
+
+create_list_of_games(List) :- findall(G, game(G, _, _, _, _, _, _), List).
+
+more_drawn_game(X) :- 
+    create_list_of_game_count(ListC),
+    create_list_of_games(ListG), 
+    max_list(ListC, _, Index),
+    nth0(Index, ListG, E),
+    findall([N1, N2, N3, N4, N5, N6], (game(G, N1, N2, N3, N4, N5, N6), G =:= E), X).
+
 
 /*************************************************************************
  * Um número X foi sorteado quantas vezes?.
- * Reference:
-    https://www.reddit.com/r/prolog/comments/4cecoe/how_to_count_ocurrences_of_an_element_in_a_list/
 ************************************************************************/
-do_list(N, L):- findall(Num, between(1, N, Num), L)  .
+count_occ(X, N) :- aggregate_all(count, number_drawn(X), N).
 
-ocurrence_of([] , _, 0) . %empty list, count of anything is 0. Base case.
-% The first item in the list is the same as what you want to count so
-% add1 to the recursive count.
-ocurrence_of([H|T], H, NewCount) :- 
-    (number_drawn(H) -> ocurrence_of(T, H, OldCount), NewCount is OldCount + 1) ;
-    ocurrence_of(T, H, OldCount) .
+/*************************************************************************
+* Qual o número foi mais sorteado?
+************************************************************************/
 
-%The first item in the list is different so keep old count
-ocurrence_of([H | T] ,H2, Count) :- dif(H,H2),
-    ocurrence_of(T, H2, Count) .
-
-
-% Qual o número foi mais sorteado?
-more_drawn_number() :- false.
-
+more_drawn_number(X) :- create_list_of_numbers(1, 60, L), maplist(count_occ, L, Result), max_list(Result, _, X).

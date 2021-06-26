@@ -2,33 +2,10 @@ from flask import request
 from helpers import PrologFacade
 from http import HTTPStatus
 
-STATUS_CODE = 200
-
 
 class Controllers:
     def __init__(self):
         self.__prolog = PrologFacade()
-
-    def __body_validation(self, body: dict, fields: list):
-        if not body:
-            return {"error": "Wrong format"}, HTTPStatus.ACCEPTED
-
-        fields_dict = {}
-        for field in fields:
-            fields_dict[field] = False
-
-        for key in body.keys():
-            if not fields_dict[key]:
-                field[key] = True
-
-        response = {"error": {}}
-        status_code = HTTPStatus.ACCEPTED
-        for field in fields_dict:
-            if not fields_dict[key]:
-                response["error"][key] = '{} is required'.format(key)
-                status_code = HTTPStatus.UNPROCESSABLE_ENTITY
-
-        return response, status_code
 
     def number_drawn(self):
         """
@@ -43,14 +20,14 @@ class Controllers:
         body = request.get_json()
         # self.__body_validation(self, body, ['number'])
         if not body:
-            return {"error": "Wrong format"}, 422
+            return {"error": "Wrong format"}, HTTPStatus.UNPROCESSABLE_ENTITY
         # __body_validation
         if "number" not in body:
             return {
                 "error": {
                     "number": ["Number is required"]
                 }
-            }, 400
+            }, HTTPStatus.BAD_REQUEST
 
         drawn = self.__prolog.query("number_drawn({})".format(body["number"]))
 
@@ -63,7 +40,7 @@ class Controllers:
     def winning_game(self):
         body = request.get_json()
         if not body:
-            return {"error": "Wrong format"}, 422
+            return {"error": "Wrong format"}, HTTPStatus.UNPROCESSABLE_ENTITY
 
         # TODO: Melhorar a validação
         if "game" not in body:
@@ -71,7 +48,7 @@ class Controllers:
                 "error": {
                     "game": ["Game is required"]
                 }
-            }, 400
+            }, HTTPStatus.BAD_REQUEST
 
         winning = self.__prolog.query("winning_game({}, {}, {}, {}, {}, {})".format(
             body["game"]["n1"],
@@ -89,37 +66,51 @@ class Controllers:
         }
 
     def never_drawn(self):
+        result = self.__prolog.query("never_drawn(List)")
         return {
             "data": {
-                "ok": True
+                "list": result[0]["List"]
             }
         }
 
     def win_the_game_more_often(self):
+        results = self.__prolog.query("more_drawn_game(X)")
+
+        # Remove duplicate items
+        results_set = set()
+        for result in results:
+            result_tuple_a = tuple(result["X"][0])
+            result_tuple_b = tuple(result["X"][1])
+
+            results_set.add(result_tuple_a)
+            results_set.add(result_tuple_b)
+
         return {
             "data": {
-                "ok": True
+                "list": list(results_set),
             }
         }
 
     def check_occurence_of_drawn_number(self):
         body = request.get_json()
         if not body:
-            return {"error": "Wrong format"}, 422
+            return {"error": "Wrong format"}, HTTPStatus.UNPROCESSABLE_ENTITY
 
-        query = "ocurrence_of({},{}, Count)".format(
-            [*range(1, 61)], body["number"])
-        count = self.__prolog.query(query)
+        query = "count_occ({}, Count)".format(body["number"])
+        result = self.__prolog.query(query)
 
         return {
             "data": {
-                "count": count[0]['Count']
+                "count": result[0]['Count']
             }
         }
 
     def more_drawn_number(self):
+        query = "more_drawn_number(L)"
+        result = self.__prolog.query(query)
+
         return {
             "data": {
-                "ok": True
+                "number": result[0]['L']
             }
         }
