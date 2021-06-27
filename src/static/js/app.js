@@ -29,12 +29,18 @@ async function post(endPoint = "", request = {}) {
         console.error(error);
     }
 }
+
+function showAlert(message) {
+    const alert = document.getElementById("alert");
+    alert.classList.remove("hidden");
+    alert.querySelector("h4").innerHTML = message;
+}
+
 /***************************************************************************
  * Verifica se um número já foi sorteado
  ***************************************************************************/
 async function onClickBtnCheckNumberDrawn() {
     const inptNumberDrawn = document.getElementById("inpt-number-drawn");
-    const alertNumberDrawn = document.getElementById("number-drawn-alert");
 
     if (!inptNumberDrawn.value) {
         alert("Preencha o número corretamente");
@@ -46,11 +52,9 @@ async function onClickBtnCheckNumberDrawn() {
     try {
         const responseBody = await post("/number-drawn", { number })
         const { data: { drawn } } = responseBody;
-        inptNumberDrawn.value = "";
-        alertNumberDrawn.classList.remove("hidden");
 
         const message = `O número ${number} ${drawn ? "já" : "nunca"} foi sorteado`;
-        alertNumberDrawn.querySelector("h4").innerHTML = message
+        showAlert(message);
     } catch (error) {
         console.error(error)
     }
@@ -58,7 +62,6 @@ async function onClickBtnCheckNumberDrawn() {
 
 async function onClickBtnCheckWinningGame() {
     const inptWinningGame = document.getElementById("inpt-winning-game");
-    const alertWinningGame = document.getElementById("winning-game-alert");
 
     if (!inptWinningGame.value) {
         alert("Preencha os números corretamente");
@@ -87,13 +90,10 @@ async function onClickBtnCheckWinningGame() {
         const responseBody = await post("/winning-game", requestBody)
         const { data: { win } } = responseBody;
 
-        inptWinningGame.value = "";
-        alertWinningGame.classList.remove("hidden");
-
         const numbersStr = numbers.join(", ")
         const message = `O jogo (${numbersStr}) ${win ? "já" : "nunca"} foi sorteado`
 
-        alertWinningGame.querySelector("h4").innerHTML = message;
+        showAlert(message);
     } catch (error) {
         console.error(error)
     }
@@ -104,7 +104,6 @@ async function onClickBtnCheckWinningGame() {
 ***************************************************************************/
 async function onClickBtnCheckOccurenceOfDrawnNumber() {
     const inptOccurenceOfDrawnNumber = document.getElementById("inpt-occurence-of-drawn-number")
-    const alertOccurenceOfDrawnNumber = document.getElementById("occurence-of-drawn-number-alert");
 
     if (!inptOccurenceOfDrawnNumber.value) {
         alert("Preencha os números corretamente");
@@ -118,8 +117,7 @@ async function onClickBtnCheckOccurenceOfDrawnNumber() {
         const { data: { count } } = responseBody
         const message = `O número ${number} foi sorteado ${count} vez(es)`;
 
-        alertOccurenceOfDrawnNumber.classList.remove("hidden")
-        alertOccurenceOfDrawnNumber.querySelector("h4").innerHTML = message
+        showAlert(message);
     } catch (error) {
         console.error(error)
     }
@@ -130,7 +128,6 @@ async function onClickBtnCheckOccurenceOfDrawnNumber() {
  * Verifica quais números nunca foram sorteados
  **************************************************************************/
 async function onClickBtnNumberNeverDrawn() {
-    const alertNumberNeverDrawn = document.getElementById("number-never-drawn-alert");
     try {
         const responseBody = await post("/never-drawn")
         const { data: { list } } = responseBody
@@ -142,8 +139,7 @@ async function onClickBtnNumberNeverDrawn() {
             message = `Os números (${list.join(", ")}) nunca foram sorteados`;
         }
 
-        alertNumberNeverDrawn.classList.remove("hidden")
-        alertNumberNeverDrawn.querySelector("h4").innerHTML = message
+        showAlert(message);
     } catch (error) {
         console.error(error)
     }
@@ -153,13 +149,11 @@ async function onClickBtnNumberNeverDrawn() {
  * Check more drawn number
  **************************************************************************/
 async function onClickBtnMoreDrawnNumber() {
-    const alertMoreDrawnNumber = document.getElementById("more-drawn-number-alert");
     try {
         const responseBody = await post("/more-drawn-number")
         const { data: { number } } = responseBody
 
-        alertMoreDrawnNumber.classList.remove("hidden")
-        alertMoreDrawnNumber.querySelector("h4").innerHTML = `O número mais sorteado foi ${number + 1}`
+        showAlert(`O número mais sorteado foi ${number + 1}`);
     } catch (error) {
         console.error(error)
     }
@@ -169,15 +163,12 @@ async function onClickBtnMoreDrawnNumber() {
  * check win the game more often
  **************************************************************************/
 async function onClickBtnCheckWinTheGameMoreOften() {
-    const alertWinTheGameMoreOftenAlert = document.getElementById("win-the-game-more-often-alert");
-
     try {
         const { data: { list = [] } } = await post("/win-the-game-more-often", {})
-        alertWinTheGameMoreOftenAlert.classList.remove("hidden");
 
         if (!list) {
             const emptyMessage = 'Nenhum jogo foi sorteado mais de uma vez.'
-            alertWinTheGameMoreOftenAlert.querySelector("h4").innerHTML = emptyMessage;
+            showAlert(emptyMessage);
             return
         }
 
@@ -189,7 +180,7 @@ async function onClickBtnCheckWinTheGameMoreOften() {
             return str
         }, '')
 
-        alertWinTheGameMoreOftenAlert.querySelector("h4").innerHTML = `${header} ${message}`;
+        showAlert(`${header} ${message}`);
     } catch (error) {
         console.error(error)
     }
