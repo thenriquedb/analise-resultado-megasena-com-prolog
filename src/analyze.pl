@@ -1,13 +1,5 @@
 :- dynamic(game/7).
 
-game(1, 1, 2, 3, 4, 5, 6).
-game(2, 1, 2, 3, 4, 5, 6).
-game(3, 1, 2, 3, 4, 5, 6).
-game(4, 8, 2, 9, 10, 5, 6).
-game(5, 8, 2, 9, 10, 5, 6).
-game(6, 8, 2, 9, 10, 5, 6).
-game(7, 8, 2, 9, 10, 5, 6).
-
 create_list_of_numbers(A, A, [A]).
 create_list_of_numbers(N, A, [N|T]) :-
     N < A,
