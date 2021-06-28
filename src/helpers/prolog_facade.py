@@ -8,7 +8,7 @@ class PrologFacade:
     def consult(self, path: str):
         self.__prolog.consult(path)
 
-    def query(self, query: list):
+    def query(self, query: str):
         return list(self.__prolog.query(query))
 
     def assertz(self, fact: str):
