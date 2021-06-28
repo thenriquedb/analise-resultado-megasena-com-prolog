@@ -12,7 +12,7 @@ if __name__ == "__main__":
 
     HOST = 'localhost'
     PORT = 4000
-    CSV_PATH = args.csv
+    CSV_PATH = args.csv if args.csv else 'data/games.csv'
 
     app = App(HOST, PORT)
     app.load_games(CSV_PATH)
