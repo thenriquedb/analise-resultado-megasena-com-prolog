@@ -75,15 +75,11 @@ class Controllers:
 
     def win_the_game_more_often(self):
         results = self.__prolog.query("more_drawn_game(X)")
-
         # Remove duplicate items
         results_set = set()
         for result in results:
-            result_tuple_a = tuple(result["X"][0])
-            result_tuple_b = tuple(result["X"][1])
-
+            result_tuple_a = tuple(result["X"])
             results_set.add(result_tuple_a)
-            results_set.add(result_tuple_b)
 
         return {
             "data": {

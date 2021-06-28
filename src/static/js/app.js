@@ -168,7 +168,7 @@ async function checkWinTheGameMoreOften() {
     try {
         const { data: { list = [] } } = await post("/win-the-game-more-often", {})
 
-        if (! list) {
+        if (list.length == 0) {
             showAlert('Nenhum jogo foi sorteado mais de uma vez.');
             return
         }

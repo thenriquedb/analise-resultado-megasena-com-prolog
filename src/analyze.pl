@@ -1,5 +1,13 @@
 :- dynamic(game/7).
 
+game(1, 1, 2, 3, 4, 5, 6).
+game(2, 1, 2, 3, 4, 5, 6).
+game(3, 1, 2, 3, 4, 5, 6).
+game(4, 8, 2, 9, 10, 5, 6).
+game(5, 8, 2, 9, 10, 5, 6).
+game(6, 8, 2, 9, 10, 5, 6).
+game(7, 8, 2, 9, 10, 5, 6).
+
 create_list_of_numbers(A, A, [A]).
 create_list_of_numbers(N, A, [N|T]) :-
     N < A,
@@ -32,21 +40,10 @@ winning_game(A,B,C,D,E,F) :- game(_,A,B,C,D,E,F).
 /*************************************************************************
  * Algum jogo completo já foi contemplado mais de uma vez? Qual?
 *************************************************************************/
-create_list_of_game_count(List) :- findall(Q, 
-    (   
-        
-        game(_, N1, N2, N3, N4, N5, N6), 
-        aggregate_all(count, game(_, N1, N2, N3, N4, N5, N6), Q)
-    ), List).
-
-create_list_of_games(List) :- findall(G, game(G, _, _, _, _, _, _), List).
-
-more_drawn_game(X) :- 
-    create_list_of_game_count(ListC),
-    create_list_of_games(ListG), 
-    max_list(ListC, _, Index),
-    nth0(Index, ListG, E),
-    findall([N1, N2, N3, N4, N5, N6], (game(G, N1, N2, N3, N4, N5, N6), G =:= E), X).
+more_drawn_game(L) :-
+    game(X, X1, X2, X3, X4, X5, X6) -> 
+    game(Y, X1, X2, X3, X4, X5, X6) , X \= Y, 
+    L = [X1, X2, X3, X4, X5, X6].
 
 
 /*************************************************************************
