@@ -1,4 +1,4 @@
-![Home](../docs/../mega-sena/docs/app.png)
+![Home](./docs/../mega-sena/docs/app.png)
 
 ## :book: Sobre 
 O trabalho consiste em usar o melhor de dois paradigmas de programação diferentes. O paradigma imperativo ou orientado a objetos pode ser usado para criar interfaces, manipular arquivos textos e fornece uma base de dados formatada, além é claro, de apresentar os resultados de forma amigável. 
